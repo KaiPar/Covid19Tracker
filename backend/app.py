@@ -13,21 +13,18 @@ def get_data_from_json():
     dict_data = requests.get('https://api.covid19india.org/data.json').json()
 
     case_ts = dict_data["cases_time_series"]
-    tot_cases, deaths, reco, dailyConf, days = [], [], [], [], []
+    tot_cases, deaths, reco, dailyConf, days, dailyReco = [], [], [], [], [], []
 
     for i in range(len(case_ts)):
         tot_cases.append(int(case_ts[i]["totalconfirmed"]))
         deaths.append(int(case_ts[i]["totaldeceased"]))
         reco.append(int(case_ts[i]["totalrecovered"]))
         dailyConf.append(int(case_ts[i]["dailyconfirmed"]))
+        dailyReco.append(int(case_ts[i]["dailyrecovered"]))
         days.append(i+1)
 
-    return tot_cases, deaths, reco, dailyConf, days, dailyConf[-1]
+    return tot_cases, deaths, reco, dailyConf, days, dailyConf[-1], dailyReco
 
-
-@app.route('/')
-def home():
-    return "Test..."
 
 @app.route('/getdata')
 def index():
@@ -42,7 +39,8 @@ def index():
         "totalRec": int(dat_tup[2][-1]),
         "dailyConf": (dat_tup[3]),
         "days": (dat_tup[4]),
-        "lastChange": int(dat_tup[5])
+        "lastChange": int(dat_tup[5]),
+        "dailyReco": dat_tup[-1]
     }
    # print(data)
     return json.dumps(data)

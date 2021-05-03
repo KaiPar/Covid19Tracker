@@ -12,7 +12,7 @@ export class Getc19data extends Component{
     }
 
     componentDidMount() {
-        axios.get("http://192.168.29.74:5000/getdata")
+        axios.get("http://192.168.29.140:5000/getdata")
             .then (response => {
                 // console.log(response)
                 this.setState({items: response.data})
@@ -57,6 +57,19 @@ export class Getc19data extends Component{
               }
           ]
         };
+
+        const DaliyReco = {
+            labels: items.days,
+            datasets: [{
+                label: 'Daily Recovered',
+                pointRadius: 0.5,
+                fill: false,
+                lineTension: 0.5,
+                borderColor: '#008000',
+                borderWidth: 2,
+                data: items.dailyReco       
+            }]
+        }
         
 /*         const options = {
             title: "Total Cases vs Deaths",
@@ -72,6 +85,7 @@ export class Getc19data extends Component{
         const newCase = items.dailyConf;
         const days = items.days;
         const lastChange = items.lastChange;
+        const dailyReco = items.dailyReco
 
         console.log("TotalRec", totalRec);
         console.log("TotalConf", totalConf);
@@ -133,7 +147,21 @@ export class Getc19data extends Component{
                                         position:'right'
                                     }
                             }}
-                        />                                             
+                        />    
+                        <Line class="graph"
+                            data={DaliyReco}
+                            options={{
+                                    title:{
+                                    display:true,
+                                    text:'Covid-19 India recovered',
+                                    fontSize:20
+                                    },
+                                    legend:{
+                                        display:true,
+                                        position:'right'
+                                    }
+                            }}
+                        />                                                                  
                         <br />
                     </div>
                 </div>
