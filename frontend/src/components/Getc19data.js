@@ -12,7 +12,7 @@ export class Getc19data extends Component{
     }
 
     componentDidMount() {
-        axios.get("http://192.168.29.140:5000/getdata")
+        axios.get("https://1d894b0be4c7.ngrok.io/getdata")
             .then (response => {
                 // console.log(response)
                 this.setState({items: response.data})
